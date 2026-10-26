@@ -1,20 +1,29 @@
 # %% [markdown]
 # # PetLongevity-Bench: species-transfer probe (v0)
 #
-# Does the model treat a finding from a dog-only (or cat-only) study as evidence about the
-# other species? Each finding is a verbatim sentence from a CC BY PubMed abstract about a
-# single species. The model sees the abstract and is asked whether it supports the finding
-# for (a) the species actually studied, where the answer is `supported`, and (b) the other
-# companion species, where the answer is `insufficient`. The prompt does not state the rule. Labels come from the construction
-# and the registry's species field, not from human annotation. Abstracts that mention the
-# other species, and findings that mention humans or rodents, are excluded.
-#
-# Status: v0, built only from the 34 CC BY papers. Frontier models are near ceiling
-# (abstracts usually name their species); the errors so far come from smaller models
-# refusing findings that are in the abstract. Harder items need human-written claims.
+# Does the model keep evidence about one companion species from standing in for the other?
+# Each finding is a verbatim sentence from a CC BY PubMed abstract about a single species.
+# The model sees the abstract and is asked whether the finding is supported, contradicted,
+# or the evidence is insufficient, as a claim about (a) the species actually studied, where
+# the answer is `supported`, and (b) the other companion species, where the answer is
+# `insufficient`: a dog-only study says nothing either way about cats. The prompt does not
+# state the rule. Labels come from the construction and the registry's species field, not
+# from human annotation. Abstracts that mention the other species, and findings that
+# mention humans or rodents, are excluded.
 #
 # Score: balanced accuracy over the two halves. A model that always answers `supported`
-# scores 0.5, so does one that always answers `insufficient`.
+# scores 0.5, so does one that always answers `insufficient`. Each run also reports, as
+# assertions, the two ways the cross-species half goes wrong:
+#
+# - species-transfer rate: `supported` for the other species (carrying the finding over)
+# - over-refutation rate: `contradicted` for the other species (treating "studied in dogs"
+#   as evidence that the finding is false in cats)
+#
+# First results: species transfer is close to zero for every model tested; the score is
+# driven by over-refutation (GPT-5.4 answered `contradicted` on 50 of 86 cross-species
+# items) and by refusing findings that are in the abstract.
+#
+# Status: v0, built only from the 34 CC BY papers. Harder items need human-written claims.
 
 # %%
 import csv
@@ -86,7 +95,7 @@ def normalise(text: str) -> str:
 
 
 @kbench.task(name="petbench-species-transfer-item", store_task=False)
-def judge_item(llm, item_id: str, abstract: str, finding: str, species: str, expected: str) -> bool:
+def judge_item(llm, item_id: str, abstract: str, finding: str, species: str, expected: str) -> dict:
     with kbench.chats.new(item_id):
         # The proxy reserves quota for the maximum possible output; uncapped, one
         # GPT-5.4 request reserves ~$1.92 and four in parallel exhaust the daily quota.
@@ -96,13 +105,16 @@ def judge_item(llm, item_id: str, abstract: str, finding: str, species: str, exp
         )
     answer = normalise(str(reply))
     kbench.assertions.assert_equal(expected, answer, expectation=f"{item_id}: {expected}")
-    return answer == expected
+    return {"answer": answer, "correct": answer == expected}
 
 
 # %%
 @kbench.task(
     name="PetLongevity-Bench Species Transfer",
-    description="Balanced accuracy at refusing to carry dog-only or cat-only evidence across species.",
+    description=(
+        "Balanced accuracy at judging a dog-only or cat-only finding as supported for the species studied "
+        "and insufficient for the other. Assertions report the species-transfer rate and the over-refutation rate."
+    ),
 )
 def petbench_species_transfer(llm) -> float:
     runs = judge_item.evaluate(
@@ -111,7 +123,8 @@ def petbench_species_transfer(llm) -> float:
     )
     scored = pd.DataFrame({
         "expected": [r.params["expected"] for r in runs.completed_runs],
-        "correct": [bool(r.result) for r in runs.completed_runs],
+        "answer": [r.result["answer"] for r in runs.completed_runs],
+        "correct": [bool(r.result["correct"]) for r in runs.completed_runs],
     })
     if len(scored) < len(items) * 0.9:
         # A model the proxy can't serve errors every item; a 0.0 would read as a real score.
@@ -121,6 +134,15 @@ def petbench_species_transfer(llm) -> float:
     for half, acc in per_half.items():
         print(f"{half}: {acc:.3f} over {(scored['expected'] == half).sum()} items")
     print("completed", len(scored), "of", len(items))
+
+    cross = scored[scored["expected"] == "insufficient"]["answer"]
+    transfer = float((cross == "supported").mean())
+    refuted = float((cross == "contradicted").mean())
+    print(f"species-transfer rate {transfer:.3f}, over-refutation rate {refuted:.3f} over {len(cross)} items")
+    kbench.assertions.assert_true(
+        transfer <= 0.05, expectation=f"Species-transfer rate {transfer:.1%} (supported for the other species; target <= 5%)")
+    kbench.assertions.assert_true(
+        refuted <= 0.05, expectation=f"Over-refutation rate {refuted:.1%} (contradicted for the other species; target <= 5%)")
     return float(per_half.reindex(["supported", "insufficient"]).fillna(0).mean())
 
 
