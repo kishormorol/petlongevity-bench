@@ -1,0 +1,247 @@
+{
+  "title": "PetLongevity-Bench: Pet Aging Evidence Benchmark",
+  "id": "kishormorol/petlongevity-bench",
+  "subtitle": "100 dog/cat aging papers + 300 draft claim/evidence pairs",
+  "licenses": [
+    {
+      "name": "other"
+    }
+  ],
+  "keywords": [
+    "nlp",
+    "biology",
+    "animals",
+    "health"
+  ],
+  "expectedUpdateFrequency": "monthly",
+  "resources": [
+    {
+      "path": "claim_evidence_pairs.csv",
+      "description": "300 candidate claim/evidence pairs (flat). Annotation fields are placeholders; see the description.",
+      "schema": {
+        "fields": [
+          {
+            "name": "pair_id",
+            "description": "Stable pair id, <PMID>-A<n>",
+            "type": "string"
+          },
+          {
+            "name": "paper_id",
+            "description": "PMID:<pmid>, joins registry",
+            "type": "string"
+          },
+          {
+            "name": "claim_id",
+            "description": "Claim id, <PMID>-C<n>",
+            "type": "string"
+          },
+          {
+            "name": "text_withheld",
+            "description": "True when the source licence does not allow redistributing the text",
+            "type": "boolean"
+          },
+          {
+            "name": "claim_text",
+            "description": "Verbatim abstract sentence; empty when text_withheld",
+            "type": "string"
+          },
+          {
+            "name": "span_start_char",
+            "description": "Start offset of the supporting span in the abstract",
+            "type": "integer"
+          },
+          {
+            "name": "span_end_char",
+            "description": "End offset (exclusive) of the supporting span",
+            "type": "integer"
+          },
+          {
+            "name": "species",
+            "description": "Species studied, ; separated",
+            "type": "string"
+          },
+          {
+            "name": "study_design",
+            "description": "PLACEHOLDER: category default",
+            "type": "string"
+          },
+          {
+            "name": "intervention_type",
+            "description": "PLACEHOLDER: category default",
+            "type": "string"
+          },
+          {
+            "name": "outcome",
+            "description": "PLACEHOLDER: category default",
+            "type": "string"
+          },
+          {
+            "name": "correlation_vs_causation",
+            "description": "PLACEHOLDER: category default",
+            "type": "string"
+          },
+          {
+            "name": "protocol_vs_results",
+            "description": "PLACEHOLDER: category default",
+            "type": "string"
+          },
+          {
+            "name": "evidence_strength",
+            "description": "PLACEHOLDER: always low",
+            "type": "string"
+          },
+          {
+            "name": "label",
+            "description": "PLACEHOLDER: always supported",
+            "type": "string"
+          },
+          {
+            "name": "review_status",
+            "description": "Review state; draft for every pair in v0.2",
+            "type": "string"
+          },
+          {
+            "name": "publication_date",
+            "description": "Paper publication date",
+            "type": "datetime"
+          },
+          {
+            "name": "provenance_url",
+            "description": "PubMed URL",
+            "type": "string"
+          },
+          {
+            "name": "source_text_sha256",
+            "description": "SHA-256 of the exact abstract text the offsets refer to",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "path": "registry.csv",
+      "description": "100 PubMed papers with licence and hashes; abstract text only for CC BY papers.",
+      "schema": {
+        "fields": [
+          {
+            "name": "paper_id",
+            "description": "PMID:<pmid>",
+            "type": "string"
+          },
+          {
+            "name": "pmid",
+            "description": "PubMed id",
+            "type": "string"
+          },
+          {
+            "name": "doi",
+            "description": "DOI",
+            "type": "string"
+          },
+          {
+            "name": "pmcid",
+            "description": "PubMed Central id if any",
+            "type": "string"
+          },
+          {
+            "name": "title",
+            "description": "Paper title",
+            "type": "string"
+          },
+          {
+            "name": "journal",
+            "description": "Journal",
+            "type": "string"
+          },
+          {
+            "name": "publication_date",
+            "description": "Publication date",
+            "type": "datetime"
+          },
+          {
+            "name": "publication_year",
+            "description": "Year",
+            "type": "integer"
+          },
+          {
+            "name": "species",
+            "description": "Species studied, ; separated",
+            "type": "string"
+          },
+          {
+            "name": "target_species",
+            "description": "Species the search query targeted",
+            "type": "string"
+          },
+          {
+            "name": "target_category",
+            "description": "Search category the paper was retrieved under",
+            "type": "string"
+          },
+          {
+            "name": "intervention_category",
+            "description": "Intervention category of the search",
+            "type": "string"
+          },
+          {
+            "name": "study_type_reported",
+            "description": "PubMed publication types, ; separated",
+            "type": "string"
+          },
+          {
+            "name": "license",
+            "description": "Licence string recorded at retrieval",
+            "type": "string"
+          },
+          {
+            "name": "licence_family",
+            "description": "cc-by, cc-by-nc, cc-by-nc-nd, other or none",
+            "type": "string"
+          },
+          {
+            "name": "open_access_status",
+            "description": "Open-access status at retrieval",
+            "type": "string"
+          },
+          {
+            "name": "text_included",
+            "description": "Whether the abstract text ships in this release",
+            "type": "boolean"
+          },
+          {
+            "name": "abstract_chars",
+            "description": "Length of the abstract",
+            "type": "integer"
+          },
+          {
+            "name": "abstract_sha256",
+            "description": "SHA-256 of the abstract, for verifying a re-fetch",
+            "type": "string"
+          },
+          {
+            "name": "pubmed_url",
+            "description": "PubMed URL",
+            "type": "string"
+          },
+          {
+            "name": "abstract",
+            "description": "Abstract text; empty unless text_included",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "path": "claim_evidence_pairs.jsonl",
+      "description": "Same pairs as the CSV, nested, including the review record."
+    },
+    {
+      "path": "registry.jsonl",
+      "description": "Same registry as the CSV, full retrieval metadata."
+    },
+    {
+      "path": "manifest.json",
+      "description": "Licence counts and release policy."
+    }
+  ]
+}

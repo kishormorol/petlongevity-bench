@@ -1,0 +1,9 @@
+{
+  "dataset_id": "synthetic-research-dataset-fixture",
+  "schema_version": "1.0",
+  "dataset_status": "draft",
+  "paper_registry_file": "research_papers_synthetic.jsonl",
+  "claim_evidence_file": "research_claim_evidence_synthetic.jsonl",
+  "description": "Synthetic schema fixture only; not a scientific paper registry or gold annotation.",
+  "license": "CC0-1.0"
+}

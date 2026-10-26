@@ -1,0 +1,68 @@
+benchmark: PetLongevity-Bench
+version: "0.1"
+modules:
+  M1_evidence_extraction:
+    primary: true
+    input: paper_or_excerpt
+    output: evidence_schema.json
+    metrics:
+      - field_macro_f1
+      - species_accuracy
+      - outcome_direction_accuracy
+      - citation_span_support
+      - hallucinated_field_rate
+  M2_evidence_judgment:
+    primary: true
+    labels: [supported, contradicted, insufficient]
+    required_flags:
+      - direct_species_evidence
+      - surrogate_vs_hard_endpoint
+      - efficacy_vs_protocol
+    metrics:
+      - macro_f1
+      - species_transfer_false_positive_rate
+      - surrogate_overclaim_rate
+      - risk_weighted_unsupported_claim_rate
+  M3_temporal_prioritization:
+    primary: false
+    status: pilot
+    cutoffs: ["2009-12-31", "2016-12-31", "2021-12-31"]
+    rules:
+      unlabeled_is_negative: false
+      require_frozen_retrieval_snapshot: true
+      require_frozen_database_snapshot: true
+    metrics:
+      - recall_at_10
+      - recall_at_20
+      - recall_at_50
+      - mrr
+      - ndcg
+      - enrichment_vs_random
+      - enrichment_vs_literature_count
+      - calibration_error
+  M4_biomarker_forecasting:
+    primary: false
+    metrics:
+      - recall_at_k
+      - pathway_enrichment
+      - direction_agreement
+      - cross_species_concordance_accuracy
+baselines:
+  B0: plain_llm
+  B1: llm_plus_cutoff_pubmed_rag
+  B2: llm_plus_rag_plus_species_kg
+  B3: llm_plus_rag_plus_species_kg_plus_tools_plus_verifier
+run_metadata_required:
+  - model_name
+  - model_version
+  - run_date
+  - prompt_hash
+  - corpus_snapshot_date
+  - candidate_universe_hash
+  - database_versions
+  - internet_access
+  - post_cutoff_leakage_detected
+  - source_snapshot_hash
+  - generation_settings
+  - raw_response_sha256
+  - prediction_sha256

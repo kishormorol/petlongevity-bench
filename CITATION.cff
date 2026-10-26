@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use this benchmark, please cite it as below."
+type: software
+title: "PetLongevity-Bench"
+abstract: "A runnable, provider-neutral benchmark for evidence-grounded AI systems doing dog and cat healthy-aging research, with a temporal firewall against evaluation contamination."
+authors:
+  - family-names: Morol
+    given-names: Md Kishor
+    orcid: "https://orcid.org/0000-0002-4468-8260"
+version: 0.2.0
+repository-code: "https://github.com/kishormorol/petbench"
+license: MIT
+keywords:
+  - benchmark
+  - evidence-grounding
+  - evaluation
+  - llm
+  - longevity
+  - temporal-contamination
+  - veterinary

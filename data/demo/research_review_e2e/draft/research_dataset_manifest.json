@@ -1,0 +1,9 @@
+{
+  "claim_evidence_file": "claim_evidence.jsonl",
+  "dataset_id": "synthetic-research-review-e2e",
+  "dataset_status": "draft",
+  "description": "Synthetic end-to-end review workflow fixture; not scientific gold data.",
+  "license": "CC0-1.0",
+  "paper_registry_file": "paper_registry.jsonl",
+  "schema_version": "1.0"
+}

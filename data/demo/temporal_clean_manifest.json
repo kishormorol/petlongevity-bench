@@ -1,0 +1,21 @@
+{
+  "effective_cutoff": "2016-12-31",
+  "record_count": 1,
+  "records_file": "temporal_clean_sources.jsonl",
+  "records_sha256": "0bf2e399745a83753147f3d984064114888b1014e104831691e0ef9897563210",
+  "records_content_sha256": "c391085f6fb1e9e3ebf4fd8704603fd915719e88474b39adb359fa34ccf51c50",
+  "retrieval_query": "synthetic pre-cutoff QA corpus",
+  "retrieved_at": "2017-01-01",
+  "schema_version": "1.0",
+  "snapshot_id": "demo-temporal-clean",
+  "source": "synthetic-qa",
+  "version_registry": [
+    {
+      "effective_date": "2016-01-01",
+      "kind": "database",
+      "name": "Synthetic QA registry",
+      "provenance_url": "https://example.org/demo/temporal-registry",
+      "version": "1.0"
+    }
+  ]
+}

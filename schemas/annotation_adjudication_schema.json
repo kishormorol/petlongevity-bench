@@ -1,0 +1,81 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchAnnotationAdjudicationRecord",
+  "type": "object",
+  "required": ["annotation_id", "task", "source", "review"],
+  "properties": {
+    "annotation_id": {"type": "string", "minLength": 1},
+    "task": {"enum": ["m1", "m2"]},
+    "source": {
+      "type": "object",
+      "required": ["source_id", "source_id_type", "publication_date", "provenance_url"],
+      "properties": {
+        "source_id": {"type": "string", "minLength": 1},
+        "source_id_type": {"enum": ["doi", "pmid", "other_stable_id"]},
+        "publication_date": {"type": "string", "format": "date"},
+        "provenance_url": {"type": "string", "format": "uri", "pattern": "^https?://"}
+      },
+      "additionalProperties": false
+    },
+    "review": {
+      "type": "object",
+      "required": ["annotator_a", "annotator_b", "adjudicator", "status", "notes"],
+      "properties": {
+        "annotator_a": {"$ref": "#/$defs/annotator"},
+        "annotator_b": {"$ref": "#/$defs/annotator"},
+        "adjudicator": {"$ref": "#/$defs/annotator"},
+        "status": {"enum": ["draft", "adjudicated"]},
+        "notes": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "evidence": {"$ref": "#/$defs/m1_evidence"},
+    "claim_judgment": {"$ref": "#/$defs/m2_claim_judgment"}
+  },
+  "allOf": [
+    {"if": {"properties": {"source": {"properties": {"source_id_type": {"const": "pmid"}}}}}, "then": {"properties": {"source": {"properties": {"source_id": {"pattern": "^(PMID:)?[0-9]+$"}}}}}},
+    {"if": {"properties": {"source": {"properties": {"source_id_type": {"const": "doi"}}}}}, "then": {"properties": {"source": {"properties": {"source_id": {"pattern": "^(doi:)?10\\.[0-9]{4,9}/\\S+$"}}}}}},
+    {"if": {"properties": {"task": {"const": "m1"}}}, "then": {"required": ["evidence"]}},
+    {"if": {"properties": {"task": {"const": "m2"}}}, "then": {"required": ["claim_judgment"]}}
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "annotator": {
+      "type": "object",
+      "required": ["annotator_id"],
+      "properties": {
+        "annotator_id": {"type": "string", "minLength": 1},
+        "label": {"enum": ["supported", "contradicted", "insufficient"]}
+      },
+      "additionalProperties": false
+    },
+    "m1_evidence": {
+      "type": "object",
+      "required": ["record_id", "species", "study_type", "intervention_or_exposure", "endpoint", "result_direction", "evidence_tier", "direct_species_evidence", "efficacy_result", "supporting_span"],
+      "properties": {
+        "record_id": {"type": "string", "minLength": 1},
+        "species": {"type": "array", "minItems": 1, "items": {"enum": ["dog", "cat", "human", "mouse", "rat", "other"]}},
+        "study_type": {"type": "string", "minLength": 1},
+        "intervention_or_exposure": {"type": "string", "minLength": 1},
+        "endpoint": {"type": "string", "minLength": 1},
+        "result_direction": {"enum": ["beneficial", "harmful", "null", "mixed", "association_only", "not_applicable"]},
+        "evidence_tier": {"enum": ["T0", "T1", "T2", "T3", "T4", "T5"]},
+        "direct_species_evidence": {"type": "boolean"},
+        "efficacy_result": {"type": "boolean"},
+        "supporting_span": {"type": "string", "minLength": 1}
+      },
+      "additionalProperties": false
+    },
+    "m2_claim_judgment": {
+      "type": "object",
+      "required": ["item_id", "claim", "evidence_ids", "label"],
+      "properties": {
+        "item_id": {"type": "string", "minLength": 1},
+        "claim": {"type": "string", "minLength": 1},
+        "evidence_ids": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "label": {"enum": ["supported", "contradicted", "insufficient"]}
+      },
+      "additionalProperties": false
+    }
+  }
+}

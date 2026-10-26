@@ -1,0 +1,9 @@
+{
+  "dataset_id": "demo-m2-adjudication",
+  "schema_version": "1.0",
+  "task": "m2",
+  "dataset_status": "synthetic",
+  "records_file": "dataset_m2_records.jsonl",
+  "description": "Synthetic QA fixture only; not scientific evidence or benchmark gold.",
+  "license": "CC0-1.0"
+}

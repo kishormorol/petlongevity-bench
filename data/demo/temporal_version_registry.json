@@ -1,0 +1,9 @@
+[
+  {
+    "name": "Synthetic QA registry",
+    "kind": "database",
+    "version": "1.0",
+    "effective_date": "2016-01-01",
+    "provenance_url": "https://example.org/demo/temporal-registry"
+  }
+]

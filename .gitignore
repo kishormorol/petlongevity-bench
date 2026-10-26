@@ -1,0 +1,25 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest_tmp/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.env
+.env.*
+reports/runs/
+data/snapshots/private/
+review/abstracts_*/handoff/
+review/abstracts_*/llm_prompts/
+.DS_Store
+
+# release bundles built by scripts/export_release.py
+release/
+
+# Generated manuscript reading copy and visual previews
+output/pdf/PetLongevity_Bench_Manuscript.pdf
+tmp/pdfs/
+kaggle_upload/
+*.run.json

@@ -1,0 +1,28 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "title":"PetLongevityBenchRunManifest",
+  "type":"object",
+  "required":["benchmark_version","module","baseline","model_name","model_version","run_date","prompt_hash","corpus_snapshot_date","candidate_universe_hash","database_versions","internet_access","post_cutoff_leakage_detected","temporal_leakage_status","closed_model_pretraining_risk","source_snapshot_hash","generation_settings","raw_response_sha256","prediction_sha256"],
+  "properties":{
+    "benchmark_version":{"type":"string"},
+    "module":{"enum":["M1","M2","M3","M4"]},
+    "baseline":{"enum":["B0","B1","B2","B3","custom"]},
+    "model_name":{"type":"string"},
+    "model_version":{"type":"string"},
+    "run_date":{"type":"string"},
+    "prompt_hash":{"type":["string","null"]},
+    "corpus_snapshot_date":{"type":["string","null"]},
+    "candidate_universe_hash":{"type":["string","null"]},
+    "database_versions":{"type":"object"},
+    "internet_access":{"type":"boolean"},
+    "post_cutoff_leakage_detected":{"type":"boolean"},
+    "temporal_leakage_status":{"enum":["leakage_free","leakage_detected","not_a_temporal_run"]},
+    "closed_model_pretraining_risk":{"enum":["unknown","possible","not_applicable"]},
+    "source_snapshot_hash":{"type":["string","null"]},
+    "generation_settings":{"type":"object"},
+    "raw_response_sha256":{"type":"string"},
+    "prediction_sha256":{"type":"string"},
+    "notes":{"type":["string","null"]}
+  },
+  "additionalProperties":false
+}

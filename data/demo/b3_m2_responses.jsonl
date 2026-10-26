@@ -1,0 +1,4 @@
+{"request_id":"J001","prediction":{"item_id":"J001","label":"insufficient"},"claims":[{"claim_id":"DEMO-C1","text":"Synthetic assessment.","status":"supported","evidence_ids":["E:cat"]}]}
+{"request_id":"J002","prediction":{"item_id":"J002","label":"insufficient"},"claims":[{"claim_id":"DEMO-C2","text":"Synthetic assessment.","status":"supported","evidence_ids":["E:cat"]}]}
+{"request_id":"J003","prediction":{"item_id":"J003","label":"supported"},"claims":[{"claim_id":"DEMO-C3","text":"Synthetic assessment.","status":"supported","evidence_ids":["E:cat"]}]}
+{"request_id":"J004","prediction":{"item_id":"J004","label":"contradicted"},"claims":[{"claim_id":"DEMO-C4","text":"Synthetic assessment.","status":"supported","evidence_ids":["E:cat"]}]}

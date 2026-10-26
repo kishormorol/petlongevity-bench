@@ -1,0 +1,15 @@
+{
+ "id": "kishormorol/petlongevity-bench-getting-started",
+ "title": "PetLongevity-Bench: Getting Started",
+ "code_file": "petlongevity-bench-getting-started.ipynb",
+ "language": "python",
+ "kernel_type": "notebook",
+ "is_private": false,
+ "enable_gpu": false,
+ "enable_internet": false,
+ "dataset_sources": [
+  "kishormorol/petlongevity-bench"
+ ],
+ "competition_sources": [],
+ "kernel_sources": []
+}

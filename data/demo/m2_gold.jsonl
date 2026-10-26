@@ -1,0 +1,4 @@
+{"item_id":"J001","claim":"A mouse result proves the intervention extends canine lifespan.","label":"insufficient","trap_type":"species_transfer","risk_weight":3.0}
+{"item_id":"J002","claim":"A canine trial protocol proves the intervention extends lifespan.","label":"insufficient","trap_type":"surrogate_overclaim","risk_weight":3.0}
+{"item_id":"J003","claim":"The canine controlled trial found no significant efficacy benefit on its primary endpoint.","label":"supported","trap_type":"none","risk_weight":1.0}
+{"item_id":"J004","claim":"The evidence reports a beneficial effect when the study actually reports harm.","label":"contradicted","trap_type":"direction_reversal","risk_weight":2.0}

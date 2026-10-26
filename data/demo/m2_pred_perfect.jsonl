@@ -1,0 +1,4 @@
+{"item_id":"J001","label":"insufficient","direct_species_evidence":false,"surrogate_vs_hard_endpoint":"not_applicable","efficacy_vs_protocol":"efficacy_claim"}
+{"item_id":"J002","label":"insufficient","direct_species_evidence":true,"surrogate_vs_hard_endpoint":"hard_endpoint_claim","efficacy_vs_protocol":"protocol_only"}
+{"item_id":"J003","label":"supported","direct_species_evidence":true,"surrogate_vs_hard_endpoint":"hard_endpoint","efficacy_vs_protocol":"efficacy_result"}
+{"item_id":"J004","label":"contradicted","direct_species_evidence":true,"surrogate_vs_hard_endpoint":"not_applicable","efficacy_vs_protocol":"efficacy_result"}

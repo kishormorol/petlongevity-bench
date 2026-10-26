@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchToolTrace",
+  "type": "object",
+  "required": ["tool_name", "status"],
+  "properties": {
+    "tool_name": {"type": "string", "minLength": 1},
+    "status": {"enum": ["success", "failure"]},
+    "evidence_ids": {"type": "array", "items": {"type": "string"}},
+    "error": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

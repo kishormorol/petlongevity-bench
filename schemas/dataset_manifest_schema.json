@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchDatasetManifest",
+  "type": "object",
+  "required": ["dataset_id", "schema_version", "task", "dataset_status", "records_file", "description", "license"],
+  "properties": {
+    "dataset_id": {"type": "string", "minLength": 1},
+    "schema_version": {"const": "1.0"},
+    "task": {"enum": ["m1", "m2"]},
+    "dataset_status": {"enum": ["draft", "gold", "synthetic"]},
+    "records_file": {"type": "string", "minLength": 1},
+    "description": {"type": "string", "minLength": 1},
+    "license": {"type": "string", "minLength": 1},
+    "citation": {"type": "string"},
+    "version": {"type": "string"}
+  },
+  "additionalProperties": false
+}

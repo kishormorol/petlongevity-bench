@@ -1,0 +1,2 @@
+{"edge_id":"E:dog","subject_id":"I:demo","predicate":"associated_with","object_id":"O:mobility","evidence":true,"species":["dog"],"source_id":"DEMO:KG:1","source_date":"2016-01-01","evidence_level":"T3","provenance_url":"https://example.org/demo/kg/1"}
+{"edge_id":"E:cat","subject_id":"I:demo","predicate":"associated_with","object_id":"O:mobility","evidence":true,"species":["cat"],"source_id":"DEMO:KG:2","source_date":"2016-01-01","evidence_level":"T3","provenance_url":"https://example.org/demo/kg/2"}

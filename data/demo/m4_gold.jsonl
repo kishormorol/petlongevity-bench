@@ -1,0 +1,3 @@
+{"feature_id":"F1","future_reported":true,"direction":"increase","cross_species_concordant":true}
+{"feature_id":"F2","future_reported":false,"direction":"decrease","cross_species_concordant":false}
+{"feature_id":"F3","future_reported":true,"direction":"decrease","cross_species_concordant":true}

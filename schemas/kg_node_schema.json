@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchKnowledgeGraphNode",
+  "type": "object",
+  "required": ["node_id", "node_type", "label"],
+  "properties": {
+    "node_id": {"type": "string", "minLength": 1},
+    "node_type": {"enum": ["intervention", "outcome", "biomarker", "condition", "species", "study", "mechanism", "other"]},
+    "label": {"type": "string", "minLength": 1},
+    "aliases": {"type": "array", "items": {"type": "string"}}
+  },
+  "additionalProperties": false
+}

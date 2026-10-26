@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchB3AgentResponse",
+  "type": "object",
+  "required": ["request_id", "prediction", "claims"],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "prediction": {"type": "object"},
+    "claims": {"type": "array", "items": {"$ref": "#/$defs/claim"}}
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "required": ["claim_id", "text", "status", "evidence_ids"],
+      "properties": {
+        "claim_id": {"type": "string", "minLength": 1},
+        "text": {"type": "string", "minLength": 1},
+        "status": {"enum": ["supported", "unsupported", "uncertain"]},
+        "evidence_ids": {"type": "array", "items": {"type": "string", "minLength": 1}}
+      },
+      "additionalProperties": false
+    }
+  }
+}

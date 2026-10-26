@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PetLongevityBenchKnowledgeGraphEdge",
+  "type": "object",
+  "required": ["edge_id", "subject_id", "predicate", "object_id", "evidence"],
+  "properties": {
+    "edge_id": {"type": "string", "minLength": 1},
+    "subject_id": {"type": "string", "minLength": 1},
+    "predicate": {"type": "string", "minLength": 1},
+    "object_id": {"type": "string", "minLength": 1},
+    "evidence": {"type": "boolean"},
+    "species": {"type": "array", "items": {"enum": ["dog", "cat", "human", "mouse", "rat", "other"]}},
+    "source_id": {"type": "string", "minLength": 1},
+    "source_date": {"type": "string", "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"},
+    "evidence_level": {"enum": ["T0", "T1", "T2", "T3", "T4", "T5"]},
+    "provenance_url": {"type": "string", "minLength": 1}
+  },
+  "allOf": [
+    {"if": {"properties": {"evidence": {"const": true}}}, "then": {"required": ["species", "source_id", "source_date", "evidence_level", "provenance_url"]}}
+  ],
+  "additionalProperties": false
+}

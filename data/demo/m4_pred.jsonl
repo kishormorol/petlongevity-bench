@@ -1,0 +1,3 @@
+{"feature_id":"F1","score":0.9,"direction":"increase","cross_species_concordant":true}
+{"feature_id":"F3","score":0.8,"direction":"decrease","cross_species_concordant":true}
+{"feature_id":"F2","score":0.2,"direction":"increase","cross_species_concordant":false}
