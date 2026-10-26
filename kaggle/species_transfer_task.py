@@ -88,7 +88,12 @@ def normalise(text: str) -> str:
 @kbench.task(name="petbench-species-transfer-item", store_task=False)
 def judge_item(llm, item_id: str, abstract: str, finding: str, species: str, expected: str) -> bool:
     with kbench.chats.new(item_id):
-        reply = llm.prompt(PROMPT.format(abstract=abstract, finding=finding, plural=PLURAL[species]))
+        # The proxy reserves quota for the maximum possible output; uncapped, one
+        # GPT-5.4 request reserves ~$1.92 and four in parallel exhaust the daily quota.
+        reply = llm.prompt(
+            PROMPT.format(abstract=abstract, finding=finding, plural=PLURAL[species]),
+            extra_api_params={"max_completion_tokens": 2048},
+        )
     answer = normalise(str(reply))
     kbench.assertions.assert_equal(expected, answer, expectation=f"{item_id}: {expected}")
     return answer == expected
